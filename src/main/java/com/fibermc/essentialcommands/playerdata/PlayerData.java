@@ -29,6 +29,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.HoverEvent;
@@ -318,7 +319,7 @@ public class PlayerData extends PersistentState implements IServerPlayerEntityDa
         static final String PREVIOUS_LOCATION = "previousLocation";
     }
 
-    public void fromNbt(NbtCompound tag) {
+    public void fromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
         NbtCompound dataTag = tag.getCompound("data");
         this.pUuid = dataTag.getUuid(StorageKey.PLAYER_UUID);
 
@@ -332,7 +333,7 @@ public class PlayerData extends PersistentState implements IServerPlayerEntityDa
         if (dataTag.contains(StorageKey.NICKNAME)) {
             String nick = dataTag.getString(StorageKey.NICKNAME);
             if (!Objects.equals(nick, "null")) {
-                this.nickname = Text.Serialization.fromJson(nick);
+                this.nickname = Text.Serialization.fromJson(nick, wrapperLookup);
                 try {
                     reloadFullNickname();
                 } catch (NullPointerException ignore) {
@@ -356,7 +357,7 @@ public class PlayerData extends PersistentState implements IServerPlayerEntityDa
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public NbtCompound writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
         tag.putUuid(StorageKey.PLAYER_UUID, pUuid);
 
         NbtCompound homesNbt = new NbtCompound();
@@ -364,7 +365,7 @@ public class PlayerData extends PersistentState implements IServerPlayerEntityDa
         tag.put(StorageKey.HOMES, homesNbt);
 
         if (nickname != null) {
-            tag.putString(StorageKey.NICKNAME, Text.Serialization.toJsonString(nickname));
+            tag.putString(StorageKey.NICKNAME, Text.Serialization.toJsonString(nickname, wrapperLookup));
         }
 
         tag.putLong(StorageKey.TIME_USED_RTP_EPOCH_MS, TimeUtil.tickTimeToEpochMs(timeUsedRtp));
@@ -512,8 +513,8 @@ public class PlayerData extends PersistentState implements IServerPlayerEntityDa
         return resultCode;
     }
 
-    public void save() {
-        super.save(saveFile);
+    public void save(RegistryWrapper.WrapperLookup wrapperLookup) {
+        super.save(saveFile, wrapperLookup);
     }
 
     public void setTimeUsedRtp(int i) {

@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Level;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtSizeTracker;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 
@@ -33,7 +34,9 @@ public final class PlayerDataFactory {
 
         if (fileExisted && playerDataFile.length() != 0) {
             try {
-                pData.fromNbt(NbtIo.readCompressed(playerDataFile.toPath(), NbtSizeTracker.ofUnlimitedBytes()));
+                pData.fromNbt(
+                    NbtIo.readCompressed(playerDataFile.toPath(), NbtSizeTracker.ofUnlimitedBytes()),
+                    DynamicRegistryManager.EMPTY);
             } catch (IOException e) {
                 EssentialCommands.log(Level.WARN,
                     "Failed to load essential_commands player data for {%s}", player.getName().getString());
@@ -41,7 +44,7 @@ public final class PlayerDataFactory {
             }
         } else {
             pData.markDirty();
-            pData.save();
+            pData.save(DynamicRegistryManager.EMPTY);
         }
 
         return pData;
@@ -57,7 +60,7 @@ public final class PlayerDataFactory {
         if (Files.exists(saveFile.toPath()) && saveFile.length() != 0) {
             try {
                 NbtCompound nbtCompound3 = NbtIo.readCompressed(saveFile.toPath(), NbtSizeTracker.ofUnlimitedBytes());
-                pData.fromNbt(nbtCompound3);
+                pData.fromNbt(nbtCompound3, DynamicRegistryManager.EMPTY);
                 // If a EC data already existed, the homes we just initialized the pData with (from paramater) just got overwritten.
                 // Now, add them back if their keys do not already exist in the set we just loaded from EC save file.
                 pData.homes.putAll(homes);

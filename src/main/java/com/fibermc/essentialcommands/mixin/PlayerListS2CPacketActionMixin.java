@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.s2c.play.PlayerListS2CPacket;
 
 import static com.fibermc.essentialcommands.EssentialCommands.BACKING_CONFIG;
@@ -35,7 +36,7 @@ public class PlayerListS2CPacketActionMixin {
                 var displayName = PlayerDataManager.getInstance().getByUuid(id).getPlayer().getDisplayName();
                 var displayNameString = displayName.asTruncatedString(16);
                 buf.writeString(displayNameString, 16);
-                buf.writePropertyMap(entry.profile().getProperties());
+                PacketCodecs.PROPERTY_MAP.encode(buf, entry.profile().getProperties());
             } else {
                 vanillaWriter.write(buf, entry);
             }

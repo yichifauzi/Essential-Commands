@@ -18,6 +18,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
@@ -117,7 +118,7 @@ public class PlayerProfile extends PersistentState implements IServerPlayerEntit
     }
 
     @Override
-    public NbtCompound writeNbt(NbtCompound tag) {
+    public NbtCompound writeNbt(NbtCompound tag, RegistryWrapper.WrapperLookup wrapperLookup) {
         if (this.profileOptions.formattingDefault != null) {
             tag.putString(StorageKey.FORMATTING_DEAULT, ConfigUtil.serializeStyle(this.profileOptions.formattingDefault));
         }
@@ -131,8 +132,8 @@ public class PlayerProfile extends PersistentState implements IServerPlayerEntit
         return tag;
     }
 
-    public void save() {
-        super.save(saveFile);
+    public void save(RegistryWrapper.WrapperLookup wrapperLookup) {
+        super.save(saveFile, wrapperLookup);
     }
 
     @Override

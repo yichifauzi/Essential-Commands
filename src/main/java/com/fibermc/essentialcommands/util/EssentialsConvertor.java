@@ -56,6 +56,7 @@ public final class EssentialsConvertor {
 
     // TODO @jp: currently unused because EssentialsXParser.convertPlayerDataDir exists, but there
     //  are some good ideas here that might be worth carrying over
+    @SuppressWarnings("UnreachableCode") // for some reason IDEA 2024.1 hates casting and grays out everything after (L94)
     public static void homeConvert(MinecraftServer server) {
         File oldUsersDataDictionary = OLD_USERDATA_PATH.toFile();
         if (!oldUsersDataDictionary.exists() || oldUsersDataDictionary.isFile()) {
@@ -100,7 +101,7 @@ public final class EssentialsConvertor {
                                 String homeName = entry.getKey();
 
                                 playerData.addHome(homeName, new MinecraftLocation(world.getRegistryKey(), x, y, z, yaw, pitch));
-                                playerData.save();
+                                playerData.save(player.getServer().getRegistryManager());
 
                                 oldUserDataFile.renameTo(new File(oldUsersDataDictionary, oldUserDataFile.getName() + ".converted"));
                                 counter++;

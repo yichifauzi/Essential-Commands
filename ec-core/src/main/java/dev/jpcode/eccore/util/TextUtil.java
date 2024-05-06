@@ -8,9 +8,11 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 import com.google.gson.JsonParseException;
-import eu.pb4.placeholders.api.TextParserUtils;
+import eu.pb4.placeholders.api.ParserContext;
+import eu.pb4.placeholders.api.parsers.TagParser;
 import org.apache.logging.log4j.Level;
 
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.text.*;
 
 import dev.jpcode.eccore.ECCore;
@@ -187,7 +189,7 @@ public final class TextUtil {
     }
 
     static {
-        registerTextParser(Text.Serialization::fromJson);
+        registerTextParser(str -> Text.Serialization.fromJson(str, DynamicRegistryManager.EMPTY));
         int javaVersion = Util.getJavaVersion();
         if (javaVersion >= 16) {
             ECCore.LOGGER.log(Level.INFO, String.format(
@@ -195,7 +197,7 @@ public final class TextUtil {
                 javaVersion,
                 16
             ));
-            registerTextParser(TextParserUtils::formatText);
+            registerTextParser(str -> TagParser.DEFAULT.parseText(str, ParserContext.of()));
         } else {
             ECCore.LOGGER.log(Level.WARN, String.format(
                 "Detected Java version %d. Some features require Java %d. Some text formatting features will be disabled.",

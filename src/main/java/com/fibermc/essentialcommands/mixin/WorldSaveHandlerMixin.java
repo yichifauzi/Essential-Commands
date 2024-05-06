@@ -1,5 +1,7 @@
 package com.fibermc.essentialcommands.mixin;
 
+import java.util.Objects;
+
 import com.fibermc.essentialcommands.access.ServerPlayerEntityAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +16,7 @@ public class WorldSaveHandlerMixin {
 
     @Inject(method = "savePlayerData", at = @At("RETURN"))
     public void onSavePlayerData(PlayerEntity player, CallbackInfo ci) {
-        ((ServerPlayerEntityAccess) player).ec$getPlayerData().save();
+        ((ServerPlayerEntityAccess) player).ec$getPlayerData().save(Objects.requireNonNull(player.getServer()).getRegistryManager());
 //        System.out.printf("Saved PlayerData for player: %s\n", player.getName().getString());
     }
 

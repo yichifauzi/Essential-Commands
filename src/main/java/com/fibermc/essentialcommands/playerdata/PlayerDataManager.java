@@ -119,7 +119,7 @@ public class PlayerDataManager {
                     allChangedNicknamePlayers
                 ));
 
-                changedNicknames.forEach(PlayerData::save);
+                changedNicknames.forEach(playerData -> playerData.save(server.getRegistryManager()));
 
                 this.changedNicknames.clear();
                 this.changedTeams.clear();
