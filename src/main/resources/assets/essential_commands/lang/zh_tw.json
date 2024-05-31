@@ -15,8 +15,8 @@
   "cmd.home.set.error.limit": "無法設置家 \"${0}\" 。原因：已達到家的可設置上限(${1})。",
   "cmd.home.set.error.exists": "無法設置家 \"${0}\" 。原因：已有一個相同名稱的家。",
   "cmd.home.set.overwrite": "名為 \"${0}\" 的家已存在，\n你想覆蓋現有的家嗎？",
-  "cmd.home.list.start": "當前已設置的家： ",
-  "cmd.overwritehome.feedback": "家 \"${0}\" 已更改至當前位置。",
+  "cmd.home.list.start": "目前已設置的家： ",
+  "cmd.overwritehome.feedback": "家 \"${0}\" 已更改至目前位置。",
   "cmd.nickname.set.feedback": "已將暱稱設為 \"${0}\" 。",
   "cmd.nickname.set.error": "無法將暱稱設置為 \"${0}\" 。原因： ${1}",
   "cmd.nickname.set.error.perms": "你沒有設置暱稱的權限。",
@@ -50,37 +50,45 @@
   "cmd.warp.location_name": "傳送點： ${0}",
   "cmd.warp.tp.error.not_found": "找不到名為 \"${0}\" 的傳送點。",
   "cmd.warp.tp.error.permission": "沒有足夠的權限來傳送到 \"${0}\" 。",
-  "cmd.warp.list.start": "伺服器當前可用的傳送點：",
-  "cmd.day.error.already_daytime": "當前已是白天。",
+  "cmd.warp.list.start": "伺服器目前可用的傳送點：",
+  "cmd.day.error.already_daytime": "目前已是白天。",
   "cmd.day.feedback": "將時間設為白天。",
   "cmd.afk.error.in_combat": "無法在戰鬥中將狀態設置為離開。",
+
   "cmd.workbench.feedback": "已打開 ${0} 。",
   "cmd.workbench.container_ui_name": "EC ${0}",
   "cmd.wastebin.name": "垃圾箱",
+
   "cmd.list.feedback.empty": "找不到地點。",
   "cmd.top.location_name": "地表",
+
   "player.afk.enter": "${0} 暫時離開了。",
   "player.afk.exit": "${0} 回來了。",
+
   "teleport.error.interdimensional_teleport_disabled": "傳送失敗。原因：跨維度傳送已被禁止。",
   "teleport.queued": "將在 ${1} 秒內傳送至 ${0} ...",
   "teleport.done": "已傳送至 ${0} 。",
   "teleport.interrupted.damage": "傳送中斷。原因：受到傷害。",
   "teleport.interruped.moved": "傳送中斷。原因：移動。",
   "teleport.request.expired.sender": "發送至 ${0} 的傳送請求已過期。",
-  "teleport.request.expired.receiver": "來自 ${0} 的傳送請求已過期。",
+  "teleport.request.expired.receiver":  "來自 ${0} 的傳送請求已過期。",
   "teleport.request.canceled_by_new": "傳送至 ${0} 的操作已取消。原因：新的傳送至 ${1} 的操作已開始。",
+
   "generic.argument.target_player": "",
   "generic.error.unknown": "執行命令時發生未知錯誤。",
   "generic.enabled": "啟用",
-  "generic.disabled": "禁用",
+  "generic.disabled": "停用",
   "generic.confirm": "確認",
   "generic.deny": " 拒絕 ",
   "generic.accept": " 接受 ",
+
   "essentialcommands.fullprefix": "[Essential Commands] ",
   "essentialcommands.smallprefix": "[EC] ",
   "cmd.config.reload": "${l:essentialcommands.fullprefix} 已重新載入配置。",
+
   "rules.reload.success": "已重新載入規則文件",
   "cmd.rules.reload.error.unexpected": "重新載入規則文件時出現未知錯誤，請檢查伺服器控制台。",
   "cmd.bed.error.none_set": "玩家重生點未設置。",
   "cmd.bed.bed_destination_name": "床"
+
 }
